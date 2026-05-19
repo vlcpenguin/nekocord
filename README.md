@@ -8,7 +8,7 @@ To not risk getting banned try only using bot tokens.
 > Lacks alot of the Discord API so not good for super huge projects.
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/c8a5f8ae69694958a75f83da04f0c5ca)](https://app.codacy.com/gh/vlcpenguin/nekocord/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
+[![Maintainability](https://qlty.sh/gh/vlcpenguin/projects/nekocord/maintainability.svg)](https://qlty.sh/gh/vlcpenguin/projects/nekocord)
 # Installation
 ```sh
 go get github.com/vlcpenguin/nekocord@latest
