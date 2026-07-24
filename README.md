@@ -3,7 +3,7 @@ Minimal discord library written in GO (Nothing else to it)
 
 It works with user accounts but i wouldn't recommend it since it goes against Discords TOS and can get your account terminated even tho i've never heard of a case where some had been self-botting and got banned for it without spamming their api.
 
-To not risk getting banned try only using bot tokens.
+Avoid the risk of getting banned and try to only using bot-tokens and not user-tokens when using this library.
 
 > Lacks alot of the Discord API so not good for super huge projects.
 
