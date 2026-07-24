@@ -48,4 +48,6 @@ go: added github.com/vlcpenguin/nekocord v0.1.0
 2026/05/16 18:55:44 [+] Sent heartbeat
 2026/05/16 18:55:44 [*] Waiting for server Acknowledgement...
 2026/05/16 18:55:44 Error:websocket: close 4004: Authentication failed.
+```
 
+# PRS WELCOME
