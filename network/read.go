@@ -1,21 +1,24 @@
 package network
 
 import (
+	"fmt"
+
 	"github.com/gorilla/websocket"
 	"github.com/vlcpenguin/nekocord/util"
-	"log"
 )
 
-func read(conn websocket.Conn) {
+func read(conn *websocket.Conn) error {
 	for {
 		_, Message, err := conn.ReadMessage()
 		if err != nil {
-			log.Fatal("Error:", err)
-			return
+			return fmt.Errorf("read message: %v", err)
 		}
-		// If the message isn't nil ( Exists ) then send it to the messageHandler
+		// If we get a message then send it to the message handler
 		if Message != nil {
-			util.MessageHandler(Message, conn)
+			err := util.HandleMessage(Message, conn)
+			if err != nil {
+				return fmt.Errorf("handle message: %v", err)
+			}
 		}
 	}
 }

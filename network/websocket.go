@@ -2,9 +2,10 @@ package network
 
 import (
 	"encoding/json"
+	"log"
+
 	"github.com/gorilla/websocket"
 	"github.com/vlcpenguin/nekocord/maps"
-	"log"
 )
 
 // Connect to discords gateway
@@ -19,6 +20,7 @@ func ConnectToDiscordGateway(serverAddress string, authToken string) {
 	log.Println("[+] Connected")
 	log.Println("[*] Sending identify payload...")
 	identifyPayload := maps.GetIdentifyPayload(authToken)
+
 	// Send initial payload to identify yourself to discords gateway
 	payloadBytes, err := json.Marshal(identifyPayload)
 	if err != nil {
@@ -29,9 +31,13 @@ func ConnectToDiscordGateway(serverAddress string, authToken string) {
 		log.Fatal("write:", err)
 	}
 	log.Println("[+] Sent identify payload")
+
 	// Goroutine loop for reading websocket messages
 	go func() {
-		read(*conn)
+		err := read(conn)
+		if err != nil {
+			log.Println("gateway read: %v", err)
+		}
 	}()
 
 	select {}

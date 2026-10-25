@@ -2,12 +2,13 @@ package util
 
 import (
 	"encoding/json"
+	"fmt"
+
 	"github.com/gorilla/websocket"
-	"github.com/vlcpenguin/nekocord/models"
-	"log"
+	structs "github.com/vlcpenguin/nekocord/models"
 )
 
-func MessageHandler(Message []byte, conn websocket.Conn) {
+func HandleMessage(Message []byte, conn *websocket.Conn) error {
 	// Room for improvement i didn't know you could just turn a json into an interface with no
 	// useless structs.
 	//
@@ -15,21 +16,23 @@ func MessageHandler(Message []byte, conn websocket.Conn) {
 	var msg structs.DiscordGatewayMessage
 	err := json.Unmarshal(Message, &msg)
 	if err != nil {
-		log.Fatal(err)
-		return
+		return fmt.Errorf("message unmarshal: %v", err)
 	}
 
 	// Heartbeat
-	handleHeartbeat(Message, conn)
+	err = handleHeartbeat(Message, conn)
+	if err != nil {
+		return fmt.Errorf("handle heartbeat: %v", err)
+	}
 
 	eData, Ok := msg.EventData.(map[string]interface{})
 	if !Ok {
-		return
+		return nil
 	}
 
 	// Event Handler
 	if callback, ok := Callbacks[msg.EventName]; ok {
 		callback(eData)
 	}
-
+	return nil
 }
