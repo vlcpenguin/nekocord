@@ -57,7 +57,6 @@ func handleHeartbeat(msg []byte, conn websocket.Conn) {
 		return
 	}
 
-	// Get Sequence Number \\
 	if Message.SequenceNumber != 0 {
 		if globSeqNum == nil {
 			globSeqNum = new(int)
@@ -65,11 +64,9 @@ func handleHeartbeat(msg []byte, conn websocket.Conn) {
 		*globSeqNum = Message.SequenceNumber
 	}
 
-	// Opcode Logic \\
 	switch Message.GatewayOpcode {
 
-	// Opcode 10 Hello
-
+	// Opcode: Hello
 	case 10:
 		dataMap, ok := Message.EventData.(map[string]interface{})
 		if !ok {
@@ -83,7 +80,7 @@ func handleHeartbeat(msg []byte, conn websocket.Conn) {
 
 		startHeartBeat(conn, int(heartbeatInterval))
 
-	// OK (Heartbeat Acknowledged)
+	// Opcode: OK
 	case 11:
 		log.Println("[+] Heartbeat Acknowledged")
 
