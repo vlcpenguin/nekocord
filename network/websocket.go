@@ -32,13 +32,14 @@ func ConnectToDiscordGateway(serverAddress string, authToken string) {
 	}
 	log.Println("[+] Sent identify payload")
 
-	// Goroutine loop for reading websocket messages
-	go func() {
-		err := read(conn)
-		if err != nil {
-			log.Println("gateway read: %v", err)
-		}
-	}()
+	// Reading websocket messages that pass through the websocket connection
+	done := make(chan error, 1)
 
-	select {}
+	go func() {
+		done <- read(conn)
+	}()
+	if err := <-done; err != nil {
+		log.Printf("gateway error %v", err)
+	}
+	log.Println("[*] Discord gateway connection closed")
 }

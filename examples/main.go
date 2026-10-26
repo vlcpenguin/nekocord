@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/vlcpenguin/nekocord"
 	"log"
 	"os"
+
+	"github.com/vlcpenguin/nekocord"
 )
 
 var discord_token string = os.Getenv("discord_token")
