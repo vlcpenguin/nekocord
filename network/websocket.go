@@ -2,6 +2,7 @@ package network
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 
 	"github.com/gorilla/websocket"
@@ -9,11 +10,11 @@ import (
 )
 
 // Connect to discords gateway
-func ConnectToDiscordGateway(serverAddress string, authToken string) {
+func ConnectToDiscordGateway(serverAddress string, authToken string) error {
 	log.Println("[*] Connecting to discords gateway...")
 	conn, _, err := websocket.DefaultDialer.Dial(serverAddress, nil)
 	if err != nil {
-		log.Fatal("Dial:", err)
+		return fmt.Errorf("websocket dial: %v", err)
 	}
 	defer conn.Close()
 
@@ -42,4 +43,5 @@ func ConnectToDiscordGateway(serverAddress string, authToken string) {
 		log.Printf("gateway error %v", err)
 	}
 	log.Println("[*] Discord gateway connection closed")
+	return nil
 }
